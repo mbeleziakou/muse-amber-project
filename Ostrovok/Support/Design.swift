@@ -108,10 +108,6 @@ struct BorderGlow: ViewModifier {
         ZStack {
             // soft outer light
             shape.stroke(mesh, lineWidth: 6).blur(radius: 10).opacity(lightOpacity * (forced ? 0.35 : 0.7))
-            // fill near the edge (inside only)
-            shape.fill(mesh).opacity(0.12 * lightOpacity)
-                .mask(shape.stroke(lineWidth: 36).blur(radius: 14))
-                .clipShape(shape)
             // crisp coloured rim
             shape.strokeBorder(mesh, lineWidth: 1.5).opacity(borderOpacity)
         }

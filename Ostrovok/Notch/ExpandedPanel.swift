@@ -225,12 +225,19 @@ struct RecentsStrip: View {
                             .popIn(i)
                     }
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 14)
+                .padding(.horizontal, 6)
                 .padding(.trailing, 40)
             }
-            .padding(.vertical, -10)
-            .mask(LinearGradient(stops: [.init(color: .black, location: 0), .init(color: .black, location: 0.86), .init(color: .clear, location: 1)],
-                                 startPoint: .leading, endPoint: .trailing))
+            .scrollClipDisabled()
+            .padding(.vertical, -14)
+            .padding(.horizontal, -6)
+            .mask {
+                LinearGradient(stops: [.init(color: .clear, location: 0), .init(color: .black, location: 0.02),
+                                       .init(color: .black, location: 0.88), .init(color: .clear, location: 1)],
+                               startPoint: .leading, endPoint: .trailing)
+                    .padding(.vertical, -24)
+            }
         }
     }
 }

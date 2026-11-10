@@ -88,11 +88,12 @@ struct LibraryView: View {
                     }
                     .frame(maxWidth: 700)
                     .padding(.horizontal, 24)
-                    .padding(.top, 8)
+                    .padding(.top, 20)
                     .padding(.bottom, 80)
                     .frame(maxWidth: .infinity)
                 }
-                .edgeFade(top: 24, bottom: 56)
+                .scrollClipDisabled()
+                .edgeFade(top: 20, bottom: 56)
                 .focusable()
                 .focused($listFocused)
                 .focusEffectDisabled()
