@@ -203,6 +203,7 @@ struct FocusRow: View {
 }
 
 struct RecentsStrip: View {
+    var compact = false
     @Query(sort: \Thought.createdAt, order: .reverse) private var all: [Thought]
 
     var body: some View {
@@ -214,13 +215,13 @@ struct RecentsStrip: View {
                 Text("Your thoughts will appear here · ⌃⌥Space")
             }
             .font(.system(size: 13)).foregroundStyle(Theme.text2)
-            .frame(maxWidth: .infinity, minHeight: 150)
+            .frame(maxWidth: .infinity, minHeight: compact ? 70 : 150)
         } else {
             let colors = Theme.cardIndices(for: recent.map(\.id))
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(Array(recent.enumerated()), id: \.element.id) { i, t in
-                        ThoughtCard(thought: t, colorIndex: colors[i], sweep: i == 0)
+                        ThoughtCard(thought: t, colorIndex: colors[i], sweep: i == 0, compact: compact)
                             .popIn(i)
                     }
                 }
@@ -238,14 +239,15 @@ struct ThoughtCard: View {
     let thought: Thought
     let colorIndex: Int
     var sweep = false
+    var compact = false
     @State private var hover = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(thought.title)
-                .font(.system(size: 15, weight: .semibold)).lineLimit(3)
+                .font(.system(size: compact ? 13 : 15, weight: .semibold)).lineLimit(compact ? 2 : 3)
                 .foregroundStyle(.white)
-            if !thought.preview.isEmpty {
+            if !thought.preview.isEmpty && !compact {
                 Text(thought.preview).font(.system(size: 13)).lineLimit(3)
                     .foregroundStyle(.white.opacity(0.62))
             }
@@ -257,8 +259,8 @@ struct ThoughtCard: View {
             }
             .font(.system(size: 12, weight: .medium)).foregroundStyle(.white.opacity(0.55))
         }
-        .padding(14)
-        .frame(width: 178, height: 150, alignment: .topLeading)
+        .padding(compact ? 12 : 14)
+        .frame(width: compact ? 140 : 178, height: compact ? 96 : 150, alignment: .topLeading)
         .background(RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Theme.cardGradient(colorIndex)))
         .overlay(RoundedRectangle(cornerRadius: 20, style: .continuous).strokeBorder(.white.opacity(0.12)))
         .borderGlow(radius: 20, colors: Theme.cardGlow(colorIndex), sweep: sweep)

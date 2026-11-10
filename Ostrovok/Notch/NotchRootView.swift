@@ -93,7 +93,9 @@ struct NotchRootView: View {
             VStack(spacing: 0) {
                 Color.clear.frame(height: n.height)
                 CaptureField(compact: true)
-                    .padding(.horizontal, 14).padding(.bottom, 14).padding(.top, 6)
+                    .padding(.horizontal, 14).padding(.top, 6)
+                RecentsStrip(compact: true)
+                    .padding(.horizontal, 14).padding(.top, 12).padding(.bottom, 14)
             }
             .measure(.peek, into: c)
             .transition(.blurFade)

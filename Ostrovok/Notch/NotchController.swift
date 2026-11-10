@@ -38,6 +38,7 @@ final class NotchController {
     var hiddenForFullscreen = false
     var focusRequest = 0
     @ObservationIgnored private var peekHovered = false
+    @ObservationIgnored private var openedByHover = false
 
     @ObservationIgnored let focus = FocusController.shared
     @ObservationIgnored var panel: NotchPanel?
@@ -75,7 +76,7 @@ final class NotchController {
         case .timer: return Frame(width: n.width + 150, height: n.height + 8, radius: 12, ear: 8)
         case .saved: return Frame(width: n.width + 260, height: n.height, radius: 12, ear: 8)
         case .breakPrompt, .meeting: return Frame(width: n.width + 240, height: n.height, radius: 12, ear: 8)
-        case .peek: return Frame(width: max(460, n.width + 120), height: max(extra, n.height + 60), radius: 24, ear: 12)
+        case .peek: return Frame(width: max(520, n.width + 160), height: max(extra, n.height + 60), radius: 24, ear: 12)
         case .expanded: return Frame(width: max(640, n.width + 200), height: max(extra, n.height + 120), radius: 32, ear: 14)
         case .focusDone, .breakDone: return Frame(width: max(460, n.width + 160), height: max(extra, n.height + 60), radius: 24, ear: 12)
         }
@@ -166,7 +167,12 @@ final class NotchController {
                             guard let self else { return }
                             self.hoverWork = nil
                             if self.shapeRect.insetBy(dx: -4, dy: 0).contains(NSEvent.mouseLocation),
-                               self.mode == .idle || self.mode == .breakPrompt { self.open(.peek) }
+                               self.mode == .idle || self.mode == .breakPrompt {
+                                let hasThoughts = !DataStore.shared.recent(limit: 1).isEmpty
+                                self.openedByHover = true
+                                self.open(hasThoughts ? .expanded : .peek)
+                                self.peekHovered = true
+                            }
                         }
                     }
                     hoverWork = w
@@ -175,6 +181,11 @@ final class NotchController {
             } else {
                 hoverWork?.cancel(); hoverWork = nil
             }
+        case .expanded where openedByHover && !pinned:
+            if rect.contains(p) { peekHovered = true }
+            guard peekHovered else { break }
+            let far = !rect.insetBy(dx: -40, dy: -40).contains(p)
+            if far && ThoughtText.isBlank(draft) && draftImages.isEmpty { collapse() }
         case .peek:
             if rect.contains(p) { peekHovered = true }
             guard peekHovered else { break }
@@ -222,6 +233,7 @@ final class NotchController {
 
     func open(_ m: NotchMode) {
         collapseWork?.cancel()
+        if m == .expanded && mode == .peek { openedByHover = false }
         if !isInteractive, let front = NSWorkspace.shared.frontmostApplication, front.bundleIdentifier != Bundle.main.bundleIdentifier {
             previousApp = front
         }
@@ -241,6 +253,7 @@ final class NotchController {
 
     func collapse() {
         collapseWork?.cancel()
+        openedByHover = false
         hoverWork?.cancel(); hoverWork = nil
         let wasKey = panel?.isKeyWindow ?? false
         withAnimation(Theme.morph) { mode = .idle }
