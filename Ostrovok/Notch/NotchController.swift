@@ -14,7 +14,7 @@ enum NotchMode: Equatable {
 
 enum ExpandedTab { case recents, calendar }
 
-/// Что сейчас показывает фигура (с учётом приоритетов S5 > S6/S7 > S1 > S0).
+/// What the shape shows right now (priority S5 > S6/S7 > S1 > S0).
 enum Presentation: Equatable {
     case idle, timer, peek, expanded, saved, focusDone, breakPrompt, breakDone, meeting
 }
@@ -81,7 +81,7 @@ final class NotchController {
         }
     }
 
-    /// Прямоугольник фигуры в экранных координатах.
+    /// Shape rect in screen coordinates.
     var shapeRect: CGRect {
         let f = frame, s = geometry.screenFrame
         return CGRect(x: s.midX - f.width / 2 - f.ear, y: s.maxY - f.height, width: f.width + 2 * f.ear, height: f.height)
@@ -185,7 +185,7 @@ final class NotchController {
     }
 
     private func clickedOutside() {
-        // Глобальный монитор видит только клики мимо наших окон.
+        // The global monitor only sees clicks outside our own windows.
         switch mode {
         case .expanded where !pinned: collapse()
         case .peek where ThoughtText.isBlank(draft) && draftImages.isEmpty: collapse()

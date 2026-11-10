@@ -9,7 +9,7 @@ final class FocusController {
 
     private(set) var state: TimerState?
     var now: Date = .now
-    /// Последняя завершённая сессия (для S6 / «Перерыв окончен»).
+    /// Last finished session (for S6 / "Break is over").
     var finished: TimerState?
     var meetingSoon = false
 

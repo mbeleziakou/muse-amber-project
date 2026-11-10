@@ -51,7 +51,7 @@ final class CalendarService {
         let pred = store.predicateForEvents(withStart: start, end: end, calendars: cals)
         events = store.events(matching: pred)
             .sorted { $0.startDate < $1.startDate }
-            .map { Event(id: $0.eventIdentifier ?? UUID().uuidString, title: $0.title ?? "Без названия",
+            .map { Event(id: $0.eventIdentifier ?? UUID().uuidString, title: $0.title ?? "Untitled",
                          start: $0.startDate, end: $0.endDate, color: Color(nsColor: $0.calendar.color), isAllDay: $0.isAllDay) }
     }
 

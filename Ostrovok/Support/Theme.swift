@@ -17,8 +17,8 @@ enum Theme {
     static let surface2 = Color(hex: 0x2C2C2E)
     static let text = Color.white
     static let text2 = Color(hex: 0x8E8E93)
-    static let lime = Color(hex: 0xC6E03C)
-    static let onLime = Color(hex: 0x111111)
+    static let accent = Color(hex: 0xF4F4F5)
+    static let onAccent = Color(hex: 0x18161D)
     static let amber = Color(hex: 0xEEBC41)
     static let mint = Color(hex: 0x64D2A4)
     static let record = Color(hex: 0xFF453A)
@@ -26,12 +26,12 @@ enum Theme {
     static let spark = Color(hex: 0xE7B656)
 
     static let cardPalette: [UInt32] = [
-        0x784B34, // ржавый
-        0x766F3B, // оливковый
-        0x8A6A2E, // горчичный
-        0x84503A, // терракота
-        0x4F6447, // приглушённый зелёный
-        0x6A4552, // сливовый
+        0x784B34, // rust
+        0x766F3B, // olive
+        0x8A6A2E, // mustard
+        0x84503A, // terracotta
+        0x4F6447, // muted green
+        0x6A4552, // plum
     ]
 
     static func cardIndex(for id: UUID) -> Int {
@@ -41,7 +41,7 @@ enum Theme {
         return sum % cardPalette.count
     }
 
-    /// Детерминированные индексы цветов для ленты: соседние не совпадают.
+    /// Deterministic colour indices for a strip; neighbours never share a colour.
     static func cardIndices(for ids: [UUID]) -> [Int] {
         var out: [Int] = []
         for id in ids {
@@ -50,6 +50,11 @@ enum Theme {
             out.append(i)
         }
         return out
+    }
+
+    static func cardGlow(_ index: Int) -> [Color] {
+        let base = Color(hex: cardPalette[index % cardPalette.count])
+        return [.white, base.mix(.white, 0.55), spark.mix(.white, 0.3), base.mix(.white, 0.75)]
     }
 
     static func cardGradient(_ index: Int) -> LinearGradient {
@@ -76,7 +81,7 @@ extension Color {
     }
 }
 
-/// Появление контента: opacity + blur 4→0 + scale 0.96→1.
+/// Content entrance: opacity + blur 4→0 + scale 0.96→1.
 struct BlurFade: ViewModifier {
     let active: Bool
     func body(content: Content) -> some View {

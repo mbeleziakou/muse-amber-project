@@ -17,7 +17,7 @@ final class NotchPanel: NSPanel {
         ignoresMouseEvents = true
         isReleasedWhenClosed = false
         animationBehavior = .none
-        setAccessibilityLabel("Островок")
+        setAccessibilityLabel("Ostrovok")
     }
 
     override var canBecomeKey: Bool { true }

@@ -7,9 +7,16 @@ enum LibraryFilter: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var label: String {
         switch self {
-        case .all: "Все"
-        case .starred: "Избранное"
-        case .focus: "Во время фокуса"
+        case .all: "All"
+        case .starred: "Starred"
+        case .focus: "During focus"
+        }
+    }
+    var icon: String {
+        switch self {
+        case .all: "tray.full"
+        case .starred: "star"
+        case .focus: "timer"
         }
     }
 }
@@ -23,7 +30,10 @@ struct LibraryView: View {
     @State private var toast: (id: UUID, work: DispatchWorkItem)?
     @State private var addingTo: Thought?
     @State private var composing = false
+    @State private var selected: UUID?
     @FocusState private var searchFocused: Bool
+    @FocusState private var listFocused: Bool
+    @Namespace private var ns
 
     private var visible: [Thought] {
         let q = query.trimmingCharacters(in: .whitespaces).lowercased()
@@ -53,31 +63,42 @@ struct LibraryView: View {
             header
             ScrollViewReader { proxy in
                 ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 0, pinnedViews: []) {
+                    LazyVStack(alignment: .leading, spacing: 8) {
                         if composing {
-                            NewThoughtRow { composing = false }.padding(.bottom, 12)
+                            NewThoughtRow { composing = false }.padding(.bottom, 8).popIn(0)
                         }
                         if visible.isEmpty { emptyState }
+                        let flat = visible
                         ForEach(grouped, id: \.day) { group in
                             Text(Fmt.dayHeader(group.day))
                                 .font(.system(size: 13, weight: .semibold)).foregroundStyle(Theme.text2)
-                                .padding(.top, 22).padding(.bottom, 6)
+                                .padding(.top, 18).padding(.bottom, 2).padding(.leading, 4)
                             ForEach(group.items) { t in
                                 ThoughtRow(thought: t, query: query,
                                            expanded: state.expandedID == t.id,
-                                           onToggle: { withAnimation(.easeOut(duration: 0.18)) { state.expandedID = state.expandedID == t.id ? nil : t.id } },
+                                           onToggle: { toggle(t.id) },
                                            onAdd: { addingTo = t },
                                            onDelete: { delete(t) })
+                                    .modifier(ListSelection(selected: selected == t.id, namespace: ns, radius: 16))
+                                    .onHover { if $0 { withAnimation(.spring(response: 0.32, dampingFraction: 0.8)) { selected = t.id } } }
+                                    .popIn(flat.firstIndex(where: { $0.id == t.id }) ?? 0)
                                     .id(t.id)
-                                Divider().overlay(Color.white.opacity(0.06))
                             }
                         }
                     }
                     .frame(maxWidth: 700)
                     .padding(.horizontal, 24)
+                    .padding(.top, 8)
                     .padding(.bottom, 80)
                     .frame(maxWidth: .infinity)
                 }
+                .edgeFade(top: 24, bottom: 56)
+                .focusable()
+                .focused($listFocused)
+                .focusEffectDisabled()
+                .onKeyPress(.downArrow) { move(1, proxy); return .handled }
+                .onKeyPress(.upArrow) { move(-1, proxy); return .handled }
+                .onKeyPress(.return) { if let s = selected { toggle(s) }; return .handled }
                 .onChange(of: state.focusID) { scrollToFocus(proxy) }
                 .onAppear { scrollToFocus(proxy) }
             }
@@ -94,10 +115,27 @@ struct LibraryView: View {
         .preferredColorScheme(.dark)
     }
 
+    private func toggle(_ id: UUID) {
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+            state.expandedID = state.expandedID == id ? nil : id
+            selected = id
+        }
+    }
+
+    private func move(_ delta: Int, _ proxy: ScrollViewProxy) {
+        let items = visible
+        guard !items.isEmpty else { return }
+        let idx = selected.flatMap { s in items.firstIndex { $0.id == s } } ?? (delta > 0 ? -1 : items.count)
+        let next = max(0, min(items.count - 1, idx + delta))
+        withAnimation(.spring(response: 0.32, dampingFraction: 0.8)) { selected = items[next].id }
+        withAnimation { proxy.scrollTo(items[next].id, anchor: .center) }
+    }
+
     private func scrollToFocus(_ proxy: ScrollViewProxy) {
         guard let id = state.focusID else { return }
         filter = .all
         query = ""
+        selected = id
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             withAnimation { proxy.scrollTo(id, anchor: .center) }
             state.focusID = nil
@@ -105,30 +143,28 @@ struct LibraryView: View {
     }
 
     private var header: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 14) {
             HStack(spacing: 10) {
                 HStack(spacing: 8) {
                     Image(systemName: "magnifyingglass").foregroundStyle(Theme.text2)
-                    TextField("Поиск", text: $query).textFieldStyle(.plain).focused($searchFocused)
+                        .symbolEffect(.bounce, value: searchFocused)
+                    TextField("Search", text: $query).textFieldStyle(.plain).focused($searchFocused)
                     if !query.isEmpty {
                         Button { query = "" } label: { Image(systemName: "xmark.circle.fill").foregroundStyle(Theme.text2) }
-                            .buttonStyle(.plain).accessibilityLabel("Очистить")
+                            .buttonStyle(.plain).animatedIcon().accessibilityLabel("Clear")
                     } else {
                         Text("⌘K").font(.system(size: 12)).foregroundStyle(Theme.text2)
                     }
                 }
-                .padding(.horizontal, 14).padding(.vertical, 9)
-                .background(Capsule().fill(Theme.surface))
+                .padding(.horizontal, 16).padding(.vertical, 10)
+                .glass(999, active: searchFocused)
                 Button { composing = true } label: { Image(systemName: "plus").font(.system(size: 14, weight: .semibold)) }
-                    .buttonStyle(CircleButtonStyle()).help("Новая мысль ⌘N").accessibilityLabel("Новая мысль")
+                    .buttonStyle(CircleButtonStyle()).animatedIcon().help("New thought ⌘N").accessibilityLabel("New thought")
                 Button { SettingsWindowController.shared.show() } label: { Image(systemName: "gearshape").font(.system(size: 14)) }
-                    .buttonStyle(CircleButtonStyle()).help("Настройки").accessibilityLabel("Настройки")
+                    .buttonStyle(CircleButtonStyle()).animatedIcon(.spin).help("Settings").accessibilityLabel("Settings")
             }
-            HStack(spacing: 8) {
-                ForEach(LibraryFilter.allCases) { f in
-                    Button(f.label) { filter = f }
-                        .buttonStyle(PillButtonStyle(fill: filter == f ? .white : Theme.surface, fg: filter == f ? .black : Theme.text2))
-                }
+            HStack {
+                GooeyNav(items: LibraryFilter.allCases.map { .init(id: $0, label: $0.label, icon: $0.icon) }, selection: $filter)
                 Spacer()
             }
         }
@@ -137,16 +173,20 @@ struct LibraryView: View {
     }
 
     @ViewBuilder private var emptyState: some View {
-        let text: String = {
-            if !query.isEmpty { return "Ничего не найдено" }
+        let (icon, text): (String, String) = {
+            if !query.isEmpty { return ("magnifyingglass", "Nothing found") }
             switch filter {
-            case .all: return "Пока пусто. Наведи на вырез или нажми ⌃⌥Space"
-            case .starred: return "Нет избранного"
-            case .focus: return "Нет мыслей, пойманных во время фокуса"
+            case .all: return ("sparkle", "Nothing yet. Hover the notch or press ⌃⌥Space")
+            case .starred: return ("star", "No starred thoughts")
+            case .focus: return ("timer", "No thoughts caught during focus")
             }
         }()
-        Text(text).font(.system(size: 14)).foregroundStyle(Theme.text2)
-            .frame(maxWidth: .infinity).padding(.top, 80)
+        VStack(spacing: 10) {
+            Image(systemName: icon).font(.system(size: 22)).foregroundStyle(Theme.text2).symbolEffect(.pulse)
+            Text(text).font(.system(size: 14)).foregroundStyle(Theme.text2)
+        }
+        .frame(maxWidth: .infinity).padding(.top, 80)
+        .popIn(0)
     }
 
     private func delete(_ t: Thought) {
@@ -158,25 +198,26 @@ struct LibraryView: View {
             pendingDelete.remove(id)
             if toast?.id == id { withAnimation { toast = nil } }
         }
-        withAnimation { toast = (id, work) }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) { toast = (id, work) }
         DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: work)
     }
 
     @ViewBuilder private var toastView: some View {
         if let toast {
             HStack(spacing: 14) {
-                Text("Мысль удалена")
-                Button("Отменить") {
+                Image(systemName: "trash").symbolEffect(.bounce, value: toast.id)
+                Text("Thought deleted")
+                Button("Undo") {
                     toast.work.cancel()
                     pendingDelete.remove(toast.id)
                     withAnimation { self.toast = nil }
                 }
-                .buttonStyle(.plain).foregroundStyle(Theme.lime).fontWeight(.semibold)
+                .buttonStyle(AccentButtonStyle())
                 .keyboardShortcut("z", modifiers: .command)
             }
             .font(.system(size: 13))
-            .padding(.horizontal, 18).padding(.vertical, 11)
-            .background(Capsule().fill(Theme.surface2))
+            .padding(.leading, 18).padding(.trailing, 6).padding(.vertical, 6)
+            .glass(999)
             .padding(.bottom, 24)
             .transition(.move(edge: .bottom).combined(with: .opacity))
         }
@@ -188,9 +229,10 @@ struct CircleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(width: size, height: size)
-            .background(Circle().fill(Theme.surface))
+            .background(Circle().fill(Color.white.opacity(configuration.isPressed ? 0.14 : 0.07)))
+            .overlay(Circle().strokeBorder(Color.white.opacity(0.1)))
             .foregroundStyle(.white)
-            .opacity(configuration.isPressed ? 0.6 : 1)
+            .scaleEffect(configuration.isPressed ? 0.92 : 1)
             .contentShape(Circle())
     }
 }
@@ -211,7 +253,7 @@ struct ThoughtRow: View {
                 Text(Fmt.time(thought.createdAt))
                 if thought.duringFocus {
                     Text("·")
-                    Label("во время фокуса", systemImage: "timer").labelStyle(.titleAndIcon).foregroundStyle(Theme.amber.opacity(0.8))
+                    Label("during focus", systemImage: "timer").labelStyle(.titleAndIcon).foregroundStyle(Theme.amber.opacity(0.85))
                 }
                 if !thought.attachments.isEmpty {
                     Text("·")
@@ -228,7 +270,7 @@ struct ThoughtRow: View {
                     .scrollContentBackground(.hidden)
                     .frame(minHeight: 80, maxHeight: 360)
                     .padding(8)
-                    .background(RoundedRectangle(cornerRadius: 12).fill(Theme.field))
+                    .glass(14, active: true)
                     .onAppear { draft = thought.text }
                     .onChange(of: draft) { scheduleSave() }
                     .onDisappear { commit() }
@@ -253,6 +295,7 @@ struct ThoughtRow: View {
                 }
             }
         }
+        .padding(.horizontal, 16)
         .padding(.vertical, 14)
         .padding(.bottom, expanded ? 44 : 0)
         .contentShape(Rectangle())
@@ -261,10 +304,10 @@ struct ThoughtRow: View {
             if expanded {
                 HStack(spacing: 8) {
                     actions
-                    Button("Готово") { commit(); onToggle() }
-                        .buttonStyle(PillButtonStyle(fill: Theme.lime, fg: Theme.onLime))
+                    Button("Done") { commit(); onToggle() }.buttonStyle(AccentButtonStyle())
                 }
-                .padding(.bottom, 14)
+                .padding(.bottom, 14).padding(.trailing, 16)
+                .transition(.blurFade)
             }
         }
     }
@@ -273,20 +316,25 @@ struct ThoughtRow: View {
         HStack(spacing: 6) {
             Button { thought.isStarred.toggle(); DataStore.shared.save() } label: {
                 Image(systemName: thought.isStarred ? "star.fill" : "star")
+                    .contentTransition(.symbolEffect(.replace))
                     .foregroundStyle(thought.isStarred ? Theme.amber : Theme.text2)
             }
-            .buttonStyle(CircleButtonStyle(size: 28)).accessibilityLabel(thought.isStarred ? "Убрать из избранного" : "В избранное")
-            Button { Clip.copy(thought.text) } label: { Image(systemName: "doc.on.doc").foregroundStyle(Theme.text2) }
-                .buttonStyle(CircleButtonStyle(size: 28)).help("Копировать").accessibilityLabel("Копировать")
+            .buttonStyle(CircleButtonStyle(size: 28))
+            .animatedIcon(trigger: thought.isStarred)
+            .accessibilityLabel(thought.isStarred ? "Unstar" : "Star")
+            CopyIconButton(text: { thought.text })
             Menu {
-                Button("Дописать…", action: onAdd)
-                Button("Экспорт .md…") { DataStore.shared.export(thought) }
+                Button("Add a note…", action: onAdd)
+                Button("Export .md…") { DataStore.shared.export(thought) }
                 Divider()
-                Button("Удалить", role: .destructive, action: onDelete)
+                Button("Delete", role: .destructive, action: onDelete)
             } label: { Image(systemName: "ellipsis") }
                 .menuStyle(.borderlessButton).menuIndicator(.hidden)
-                .frame(width: 28, height: 28).background(Circle().fill(Theme.surface))
-                .accessibilityLabel("Ещё")
+                .frame(width: 28, height: 28)
+                .background(Circle().fill(Color.white.opacity(0.07)))
+                .overlay(Circle().strokeBorder(Color.white.opacity(0.1)))
+                .animatedIcon()
+                .accessibilityLabel("More")
         }
         .font(.system(size: 12))
     }
@@ -311,7 +359,7 @@ struct ThoughtRow: View {
         guard !q.isEmpty else { return a }
         var search = a.startIndex..<a.endIndex
         while let r = a[search].range(of: q, options: [.caseInsensitive, .diacriticInsensitive]) {
-            a[r].backgroundColor = Theme.amber.opacity(0.35)
+            a[r].backgroundColor = Color.white.opacity(0.22)
             a[r].foregroundColor = .white
             search = r.upperBound..<a.endIndex
         }
@@ -331,16 +379,17 @@ struct AttachmentThumb: View {
             }
         }
         .frame(width: size, height: size)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 12, style: .continuous).strokeBorder(.white.opacity(0.12)))
         .onTapGesture(count: 2) { NSWorkspace.shared.open(attachment.url) }
         .contextMenu {
-            Button("Открыть") { NSWorkspace.shared.open(attachment.url) }
-            Button("Показать в Finder") { NSWorkspace.shared.activateFileViewerSelecting([attachment.url]) }
+            Button("Open") { NSWorkspace.shared.open(attachment.url) }
+            Button("Show in Finder") { NSWorkspace.shared.activateFileViewerSelecting([attachment.url]) }
         }
     }
 }
 
-/// Новая текстовая мысль прямо в библиотеке.
+/// New text thought right in the library.
 struct NewThoughtRow: View {
     var onDone: () -> Void
     @State private var text = ""
@@ -352,16 +401,16 @@ struct NewThoughtRow: View {
                 .scrollContentBackground(.hidden)
                 .focused($focused)
                 .frame(minHeight: 90, maxHeight: 260)
-                .padding(8)
-                .background(RoundedRectangle(cornerRadius: 12).fill(Theme.field))
+                .padding(10)
+                .glass(16, active: focused)
             HStack {
-                Button("Отмена", action: onDone).buttonStyle(PillButtonStyle()).keyboardShortcut(.cancelAction)
-                Button("Сохранить") {
+                Button("Cancel", action: onDone).buttonStyle(GhostButtonStyle()).keyboardShortcut(.cancelAction)
+                Button("Save") {
                     guard !ThoughtText.isBlank(text) else { return }
                     DataStore.shared.addThought(text: text.trimmingCharacters(in: .whitespacesAndNewlines), source: .typed, session: FocusController.shared.currentSession)
                     onDone()
                 }
-                .buttonStyle(PillButtonStyle(fill: Theme.lime, fg: Theme.onLime))
+                .buttonStyle(AccentButtonStyle())
                 .keyboardShortcut(.return, modifiers: .command)
                 .disabled(ThoughtText.isBlank(text))
             }
@@ -371,7 +420,7 @@ struct NewThoughtRow: View {
     }
 }
 
-/// «Дописать» — как модалка Add a note из референса.
+/// "Add a note" sheet.
 struct AddNoteSheet: View {
     let thought: Thought
     @Environment(\.dismiss) private var dismiss
@@ -381,12 +430,12 @@ struct AddNoteSheet: View {
     var body: some View {
         VStack(spacing: 14) {
             HStack {
-                Button("Назад") { dismiss() }.buttonStyle(PillButtonStyle()).keyboardShortcut(.cancelAction)
+                Button("Back") { dismiss() }.buttonStyle(GhostButtonStyle()).keyboardShortcut(.cancelAction)
                 Spacer()
-                Text("Дописать").font(.system(size: 15, weight: .semibold))
+                Text("Add a note").font(.system(size: 15, weight: .semibold))
                 Spacer()
-                Button { save() } label: { Label("Готово", systemImage: "checkmark") }
-                    .buttonStyle(PillButtonStyle(fill: canSave ? Theme.lime : Theme.surface, fg: canSave ? Theme.onLime : Theme.text2))
+                Button { save() } label: { Label("Done", systemImage: "checkmark") }
+                    .buttonStyle(AccentButtonStyle())
                     .disabled(!canSave)
                     .keyboardShortcut(.return, modifiers: .command)
             }
@@ -397,23 +446,25 @@ struct AddNoteSheet: View {
                         ZStack(alignment: .topTrailing) {
                             if let img = NSImage(data: d) {
                                 Image(nsImage: img).resizable().aspectRatio(contentMode: .fill)
-                                    .frame(width: 64, height: 64).clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .frame(width: 64, height: 64).clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                             }
                             Button { images.remove(at: i) } label: { Image(systemName: "xmark").font(.system(size: 9, weight: .bold)) }
-                                .buttonStyle(.plain).padding(5)
+                                .buttonStyle(.plain).padding(5).animatedIcon()
                         }
+                        .popIn(i)
                     }
                     Spacer()
                     Button { pickImages() } label: { Image(systemName: "photo.on.rectangle") }
-                        .buttonStyle(CircleButtonStyle()).accessibilityLabel("Добавить фото")
+                        .buttonStyle(CircleButtonStyle()).animatedIcon().accessibilityLabel("Add photo")
                 }
             }
             .padding(14)
-            .background(RoundedRectangle(cornerRadius: 16).fill(Theme.field))
+            .glass(18)
         }
         .padding(18)
         .frame(width: 460, height: 420)
         .background(Color.black)
+        .preferredColorScheme(.dark)
         .onPasteCommand(of: [.image, .png, .tiff]) { providers in
             for p in providers {
                 _ = p.loadDataRepresentation(for: .image) { d, _ in

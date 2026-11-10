@@ -24,7 +24,7 @@ final class LibraryWindowController: NSObject, NSWindowDelegate {
             let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 820, height: 760),
                              styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
                              backing: .buffered, defer: false)
-            w.title = "Островок"
+            w.title = "Ostrovok"
             w.titlebarAppearsTransparent = true
             w.titleVisibility = .hidden
             w.isReleasedWhenClosed = false
@@ -67,7 +67,7 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
         if window == nil {
             let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 520, height: 640),
                              styleMask: [.titled, .closable], backing: .buffered, defer: false)
-            w.title = "Настройки"
+            w.title = "Settings"
             w.isReleasedWhenClosed = false
             w.appearance = NSAppearance(named: .darkAqua)
             w.contentView = NSHostingView(rootView: SettingsView())

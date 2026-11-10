@@ -23,31 +23,31 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Хоткеи") {
-                KeyboardShortcuts.Recorder("Поймать мысль", name: .capture)
-                KeyboardShortcuts.Recorder("Старт / пауза фокуса", name: .focus)
-                KeyboardShortcuts.Recorder("Библиотека", name: .library)
+            Section("Shortcuts") {
+                KeyboardShortcuts.Recorder("Catch a thought", name: .capture)
+                KeyboardShortcuts.Recorder("Start / pause focus", name: .focus)
+                KeyboardShortcuts.Recorder("Library", name: .library)
             }
-            Section("Фокус") {
-                Stepper("Фокус: \(focusMinutes) мин", value: $focusMinutes, in: 5...180, step: 5)
-                Stepper("Перерыв: \(shortBreak) мин", value: $shortBreak, in: 1...30)
-                Stepper("Длинный перерыв: \(longBreak) мин", value: $longBreak, in: 5...60, step: 5)
-                Stepper("Длинный каждые \(longEvery) фокуса", value: $longEvery, in: 2...8)
-                Toggle("Автостарт перерыва", isOn: $autoBreak)
-                Toggle("Звуки", isOn: $sounds)
-                Toggle("Таймер в крыльях", isOn: $timerInWings)
-                TextField("Shortcut при старте", text: $scStart, prompt: Text("имя команды"))
-                TextField("Shortcut при конце", text: $scEnd, prompt: Text("имя команды"))
+            Section("Focus") {
+                Stepper("Focus: \(focusMinutes) min", value: $focusMinutes, in: 5...180, step: 5)
+                Stepper("Break: \(shortBreak) min", value: $shortBreak, in: 1...30)
+                Stepper("Long break: \(longBreak) min", value: $longBreak, in: 5...60, step: 5)
+                Stepper("Long break every \(longEvery) sessions", value: $longEvery, in: 2...8)
+                Toggle("Auto-start breaks", isOn: $autoBreak)
+                Toggle("Sounds", isOn: $sounds)
+                Toggle("Timer around the notch", isOn: $timerInWings)
+                TextField("Shortcut on start", text: $scStart, prompt: Text("shortcut name"))
+                TextField("Shortcut on end", text: $scEnd, prompt: Text("shortcut name"))
             }
-            Section("Вырез") {
-                Picker("Дисплей", selection: $display) {
+            Section("Notch") {
+                Picker("Display", selection: $display) {
                     ForEach(DisplayChoice.allCases) { Text($0.label).tag($0.rawValue) }
                 }
-                Toggle("Скрывать в полноэкранных приложениях", isOn: $hideFullscreen)
-                Toggle("Скрывать при демонстрации экрана", isOn: $hideOnShare)
-                Toggle("Эмулировать вырез", isOn: $emulateNotch)
+                Toggle("Hide in full-screen apps", isOn: $hideFullscreen)
+                Toggle("Hide while screen sharing", isOn: $hideOnShare)
+                Toggle("Emulate notch", isOn: $emulateNotch)
             }
-            Section("Календари") {
+            Section("Calendars") {
                 if cal.hasAccess {
                     ForEach(cal.allCalendars, id: \.id) { c in
                         Toggle(isOn: Binding(get: { !excluded.contains(c.id) }, set: { on in
@@ -60,26 +60,26 @@ struct SettingsView: View {
                     }
                 } else {
                     HStack {
-                        Text("Нет доступа").foregroundStyle(.secondary)
+                        Text("No access").foregroundStyle(.secondary)
                         Spacer()
-                        Button("Разрешить") {
+                        Button("Allow") {
                             if cal.status == .notDetermined { Task { await cal.requestAccess() } }
                             else { CalendarService.openPrivacySettings() }
                         }
                     }
                 }
             }
-            Section("Общее") {
-                Toggle("Запускать при входе", isOn: $launchAtLogin)
+            Section("General") {
+                Toggle("Launch at login", isOn: $launchAtLogin)
                     .onChange(of: launchAtLogin) { _, on in
                         do { if on { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() } }
                         catch { launchAtLogin = SMAppService.mainApp.status == .enabled }
                     }
                 HStack {
-                    Button("Экспорт всего в Markdown…") { exportAll() }
+                    Button("Export all to Markdown…") { exportAll() }
                     if let exportResult { Text(exportResult).foregroundStyle(.secondary) }
                 }
-                Button("Выйти из Островка") { NSApp.terminate(nil) }
+                Button("Quit Ostrovok") { NSApp.terminate(nil) }
             }
         }
         .formStyle(.grouped)
@@ -92,13 +92,13 @@ struct SettingsView: View {
         p.canChooseDirectories = true
         p.canChooseFiles = false
         p.canCreateDirectories = true
-        p.prompt = "Экспорт"
+        p.prompt = "Export"
         guard p.runModal() == .OK, let url = p.url else { return }
         do {
             let n = try DataStore.shared.exportAll(to: url)
-            exportResult = "Готово: \(Plural.thoughts(n))"
+            exportResult = "Exported \(Plural.thoughts(n))"
         } catch {
-            exportResult = "Не получилось: \(error.localizedDescription)"
+            exportResult = "Failed: \(error.localizedDescription)"
         }
     }
 }

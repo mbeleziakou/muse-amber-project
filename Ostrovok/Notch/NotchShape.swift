@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// Чёрная фигура, растущая из выреза: вогнутые «ушки» сверху, скруглённый низ.
-/// Рисуется по центру верхнего края своего прямоугольника.
+/// Black shape growing out of the notch: concave "ears" on top, rounded bottom.
+/// Drawn centred on the top edge of its rect.
 struct NotchShape: Shape {
     var width: CGFloat
     var height: CGFloat

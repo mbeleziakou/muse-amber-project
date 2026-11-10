@@ -1,7 +1,7 @@
 import Foundation
 
-/// Чистая модель таймера. Хранит `endDate`, а не оставшиеся секунды,
-/// поэтому корректна после сна, смены времени и перезапуска.
+/// Pure timer model. Stores `endDate`, not remaining seconds,
+/// so it stays correct across sleep, clock changes and relaunch.
 struct TimerState: Codable, Equatable {
     enum Phase: Codable, Equatable {
         case running(endDate: Date)
@@ -38,7 +38,7 @@ struct TimerState: Codable, Equatable {
 
     func isFinished(at now: Date) -> Bool { isRunning && remaining(at: now) <= 0 }
 
-    /// Доля прошедшего (0…1) относительно запланированного + добавленного времени.
+    /// Elapsed fraction (0…1) of planned + added time.
     func progress(at now: Date) -> Double {
         let total = TimeInterval(plannedSeconds)
         guard total > 0 else { return 1 }
@@ -73,14 +73,14 @@ struct TimerState: Codable, Equatable {
     }
 }
 
-/// Что запускать после завершения фокуса.
+/// What to start after a focus session ends.
 enum Cycle {
     static func nextBreak(completedFocusInCycle: Int, longEvery: Int) -> SessionKind {
         guard longEvery > 0 else { return .shortBreak }
         return completedFocusInCycle > 0 && completedFocusInCycle % longEvery == 0 ? .longBreak : .shortBreak
     }
 
-    /// Минуты «фокуса до встречи». nil — встреча слишком скоро (< 10 мин).
+    /// Minutes for "focus until meeting". nil if the meeting is too soon (< 10 min).
     static func minutesUntil(_ start: Date, now: Date) -> Int? {
         let m = Int(start.timeIntervalSince(now) / 60)
         return m >= 10 ? m : nil

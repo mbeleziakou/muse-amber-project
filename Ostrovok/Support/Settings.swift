@@ -13,9 +13,9 @@ enum DisplayChoice: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var label: String {
         switch self {
-        case .notch: "С вырезом"
-        case .main: "Основной"
-        case .mouse: "Где курсор"
+        case .notch: "With notch"
+        case .main: "Main display"
+        case .mouse: "Under cursor"
         }
     }
 }

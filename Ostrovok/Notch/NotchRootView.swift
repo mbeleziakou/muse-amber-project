@@ -38,7 +38,7 @@ struct NotchRootView: View {
                     .contentShape(Rectangle())
                     .onTapGesture { tapped() }
                     .accessibilityAddTraits(.isButton)
-                    .accessibilityLabel("Открыть Островок")
+                    .accessibilityLabel("Open Ostrovok")
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -64,26 +64,29 @@ struct NotchRootView: View {
         case .saved:
             Wings(notch: n) {
                 HStack(spacing: 6) {
-                    Image(systemName: "checkmark").foregroundStyle(Theme.success)
-                    Text("Сохранено").foregroundStyle(.white)
+                    Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.success)
+                        .symbolEffect(.bounce, options: .speed(1.2), value: c.mode)
+                    Text("Saved").foregroundStyle(.white)
                 }
                 .font(.system(size: 13, weight: .semibold))
             } right: {
-                Text("⌘Z — отменить").font(.system(size: 12)).foregroundStyle(Theme.text2)
+                Text("⌘Z to undo").font(.system(size: 12)).foregroundStyle(Theme.text2)
             }
             .transition(.blurFade)
         case .breakPrompt:
             Wings(notch: n) {
                 Image(systemName: "cup.and.saucer.fill").foregroundStyle(Theme.mint)
+                    .symbolEffect(.pulse)
             } right: {
-                Text("Перерыв?").font(.system(size: 13, weight: .semibold)).foregroundStyle(.white)
+                Text("Take a break?").font(.system(size: 13, weight: .semibold)).foregroundStyle(.white)
             }
             .transition(.blurFade)
         case .meeting:
             Wings(notch: n) {
-                Image(systemName: "calendar").foregroundStyle(Theme.lime)
+                Image(systemName: "calendar.badge.clock").foregroundStyle(.white)
+                    .symbolEffect(.pulse)
             } right: {
-                Text("Встреча через 2 мин").font(.system(size: 12, weight: .semibold)).foregroundStyle(.white)
+                Text("Meeting in 2 min").font(.system(size: 12, weight: .semibold)).foregroundStyle(.white)
             }
             .transition(.blurFade)
         case .peek:
@@ -113,7 +116,7 @@ struct NotchRootView: View {
     }
 }
 
-/// Контент только слева и справа от камеры.
+/// Content only to the left and right of the camera.
 struct Wings<L: View, R: View>: View {
     var notch: CGSize
     @ViewBuilder var left: L
@@ -154,7 +157,7 @@ struct TimerWings: View {
             .padding(.horizontal, 16)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("\(f.kind.isBreak ? "Перерыв" : "Фокус"), осталось \(Fmt.clock(f.remaining))")
+        .accessibilityLabel("\(f.kind.isBreak ? "Break" : "Focus"), \(Fmt.clock(f.remaining)) left")
     }
 }
 
@@ -173,7 +176,7 @@ struct ProgressRing: View {
     }
 }
 
-/// Шапка S3: таймер остаётся в крыльях, если идёт.
+/// S3 header: the timer stays in the wings while running.
 struct ExpandedHeader: View {
     var notch: CGSize
     @State private var f = FocusController.shared
@@ -202,21 +205,21 @@ struct FinishedCard: View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 3) {
                 if isFocus {
-                    Text("Фокус \(Int((Double(f.finished?.plannedSeconds ?? Prefs.focusMinutes * 60) / 60).rounded())) мин готов")
+                    Text("\(Int((Double(f.finished?.plannedSeconds ?? Prefs.focusMinutes * 60) / 60).rounded())) min focus done")
                         .font(.system(size: 15, weight: .semibold))
                     let sub = subtitle(stats)
                     if !sub.isEmpty { Text(sub).font(.system(size: 12)).foregroundStyle(Theme.text2) }
                 } else {
-                    Text("Перерыв окончен").font(.system(size: 15, weight: .semibold))
+                    Text("Break is over").font(.system(size: 15, weight: .semibold))
                 }
             }
             Spacer(minLength: 8)
             if isFocus {
-                Button("Перерыв \(nextBreakMinutes)") { c.startBreakFromCard() }
-                    .buttonStyle(PillButtonStyle())
+                Button("Break \(nextBreakMinutes)") { c.startBreakFromCard() }
+                    .buttonStyle(GhostButtonStyle())
             }
-            Button("\(isFocus ? "Ещё" : "Фокус") \(Prefs.focusMinutes)") { c.startFocusFromCard() }
-                .buttonStyle(PillButtonStyle(fill: Theme.lime, fg: Theme.onLime))
+            Button("\(isFocus ? "Another" : "Focus") \(Prefs.focusMinutes)") { c.startFocusFromCard() }
+                .buttonStyle(AccentButtonStyle())
         }
         .foregroundStyle(.white)
     }
@@ -228,20 +231,21 @@ struct FinishedCard: View {
 
     private func subtitle(_ s: DataStore.DayStats) -> String {
         var parts: [String] = []
-        if s.focusCount > 0 { parts.append("\(s.focusCount)-я сессия сегодня") }
+        if s.focusCount > 0 { parts.append("\(Plural.ordinal(s.focusCount)) session today") }
         if let fin = f.finished, let session = DataStore.shared.session(id: fin.sessionID), !session.thoughts.isEmpty {
-            parts.append(Plural.thoughts(session.thoughts.count) + " " + (session.thoughts.count == 1 ? "поймана" : "поймано"))
+            parts.append(Plural.thoughts(session.thoughts.count) + " caught")
         }
         return parts.joined(separator: " · ")
     }
 }
 
 enum Plural {
-    static func ru(_ n: Int, _ one: String, _ few: String, _ many: String) -> String {
-        let m10 = n % 10, m100 = n % 100
-        let w = (m10 == 1 && m100 != 11) ? one : ((2...4).contains(m10) && !(12...14).contains(m100)) ? few : many
-        return "\(n) \(w)"
+    static func en(_ n: Int, _ one: String, _ many: String) -> String { "\(n) \(n == 1 ? one : many)" }
+    static func thoughts(_ n: Int) -> String { en(n, "thought", "thoughts") }
+    static func focuses(_ n: Int) -> String { en(n, "focus", "focuses") }
+    static func ordinal(_ n: Int) -> String {
+        let m100 = n % 100, m10 = n % 10
+        let suffix = (11...13).contains(m100) ? "th" : (m10 == 1 ? "st" : m10 == 2 ? "nd" : m10 == 3 ? "rd" : "th")
+        return "\(n)\(suffix)"
     }
-    static func thoughts(_ n: Int) -> String { ru(n, "мысль", "мысли", "мыслей") }
-    static func focuses(_ n: Int) -> String { ru(n, "фокус", "фокуса", "фокусов") }
 }

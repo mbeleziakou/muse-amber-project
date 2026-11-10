@@ -2,7 +2,7 @@
 import AppKit
 import SwiftUI
 
-/// Рендерит окно выреза во всех состояниях в PNG (для самопроверки без записи экрана).
+/// Renders the notch window in every state to PNG (self-check without screen recording).
 @MainActor
 enum DebugSnapshots {
     static func run(into dir: String) {
@@ -11,11 +11,11 @@ enum DebugSnapshots {
         let store = DataStore.shared
         if store.recent(limit: 1).isEmpty {
             let samples = [
-                "Подложку сделать белой и добавить разделитель между блоками\nСайдбар поставить а прогресс бар над ним",
-                "Понять 1 / 2 / 3 фичи которые помогут понять ценность",
-                "должен быть тайтл денис",
-                "Бриф брокеру\nОтправить до пятницы, приложить расчёт",
-                "Купить подарок маме 🎁",
+                "Make the backdrop white and add a divider between blocks\nMove the progress bar above the sidebar",
+                "Pick 1 / 2 / 3 features that prove the value",
+                "Denis needs a title here",
+                "Brief for the broker\nSend before Friday, attach the numbers",
+                "Buy a gift for mom 🎁",
             ]
             for (i, t) in samples.enumerated() {
                 let th = store.addThought(text: t, source: .typed, session: nil)
@@ -27,7 +27,7 @@ enum DebugSnapshots {
             ("s0-idle", { f.stop(); c.collapse() }),
             ("s1-focus", { f.startFocus(minutes: 25); f.tick() }),
             ("s2-peek", { c.open(.peek); c.draft = "" }),
-            ("s2-peek-text", { c.draft = "Позвонить в банк по поводу карты" }),
+            ("s2-peek-text", { c.draft = "Call the bank about the card" }),
             ("s3-expanded", { c.draft = ""; c.open(.expanded) }),
             ("s3-calendar", { c.tab = .calendar }),
             ("s5-saved", { c.tab = .recents; c.mode = .saved(UUID()) }),
@@ -42,7 +42,7 @@ enum DebugSnapshots {
             let (name, action) = steps[i]; i += 1
             action()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
-                let target = name == "library" ? NSApp.windows.first(where: { $0.title == "Островок" && !($0 is NotchPanel) })?.contentView : c.panel?.contentView
+                let target = name == "library" ? NSApp.windows.first(where: { $0.title == "Ostrovok" && !($0 is NotchPanel) })?.contentView : c.panel?.contentView
                 if let view = target, let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) {
                     view.cacheDisplay(in: view.bounds, to: rep)
                     let url = URL(fileURLWithPath: dir).appendingPathComponent("\(name).png")

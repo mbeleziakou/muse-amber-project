@@ -23,6 +23,7 @@
 		5895BE830B106BD224558681 /* TimerEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56477F5DA21496BE93A69DE8 /* TimerEngineTests.swift */; };
 		6262AC929827C91B2DE00959 /* NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FFD1DEAFB2D8AD9299D38 /* NotchGeometry.swift */; };
 		78208487E56BFD42953D7D49 /* OstrovokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383BB09D2D62ADC2967B5C02 /* OstrovokApp.swift */; };
+		8EF5200DED18B81D14500780 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238643B56E58276CDFFCC773 /* Design.swift */; };
 		93A85FD59A369DFC30A85E7D /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82664745EFDE890EF15899E4 /* CalendarService.swift */; };
 		A31F9632F915E6448C990B5A /* LibraryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D1E091733AD6A4DDF3F0EB /* LibraryWindowController.swift */; };
 		B4B96BD6916B392155A222DB /* ExpandedPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862C097ECFC1CAA361AB1676 /* ExpandedPanel.swift */; };
@@ -45,6 +46,7 @@
 		0322C5E297B353EDF235321B /* NotchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchPanel.swift; sourceTree = "<group>"; };
 		0FA7509D6BEB9CD5401168DF /* DebugSnapshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSnapshots.swift; sourceTree = "<group>"; };
 		21D1E091733AD6A4DDF3F0EB /* LibraryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryWindowController.swift; sourceTree = "<group>"; };
+		238643B56E58276CDFFCC773 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		383BB09D2D62ADC2967B5C02 /* OstrovokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstrovokApp.swift; sourceTree = "<group>"; };
 		3C083825838CD4641D711FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3D7B6D99CA6191A214B6C391 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		4D4B5B9D2463EEE60CC70AC0 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				238643B56E58276CDFFCC773 /* Design.swift */,
 				92FA9975F85750A59E446E0A /* Settings.swift */,
 				87ED83BB2E9E52A0C535A53A /* Theme.swift */,
 			);
@@ -307,6 +310,7 @@
 				93A85FD59A369DFC30A85E7D /* CalendarService.swift in Sources */,
 				BC6F654E3D83D62B8B9499D0 /* DataStore.swift in Sources */,
 				332A805F3B1EA3954C857FFE /* DebugSnapshots.swift in Sources */,
+				8EF5200DED18B81D14500780 /* Design.swift in Sources */,
 				B4B96BD6916B392155A222DB /* ExpandedPanel.swift in Sources */,
 				36F30A04D97D911E3A0976DD /* FocusController.swift in Sources */,
 				0E218E16D00F7856E8C24BD7 /* LibraryView.swift in Sources */,

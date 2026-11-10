@@ -7,7 +7,7 @@ final class TimerEngineTests: XCTestCase {
     func testRemainingUsesEndDateAcrossSleep() {
         let s = TimerState.start(kind: .focus, seconds: 25 * 60, now: t0)
         XCTAssertEqual(s.remaining(at: t0), 1500)
-        // «Сон» на 10 минут — время считается по endDate.
+        // 10 minutes of "sleep": time is computed from endDate.
         XCTAssertEqual(s.remaining(at: t0.addingTimeInterval(600)), 900)
         XCTAssertTrue(s.isFinished(at: t0.addingTimeInterval(1500)))
         XCTAssertEqual(s.remaining(at: t0.addingTimeInterval(9999)), 0)
@@ -41,7 +41,7 @@ final class TimerEngineTests: XCTestCase {
     }
 
     func testCodableRoundTripSurvivesRestart() throws {
-        var s = TimerState.start(kind: .shortBreak, seconds: 300, now: t0, untilEventTitle: "Синк", meetingStart: t0.addingTimeInterval(300))
+        var s = TimerState.start(kind: .shortBreak, seconds: 300, now: t0, untilEventTitle: "Sync", meetingStart: t0.addingTimeInterval(300))
         s.pause(at: t0.addingTimeInterval(10))
         let data = try JSONEncoder().encode(s)
         let back = try JSONDecoder().decode(TimerState.self, from: data)
@@ -64,12 +64,12 @@ final class TimerEngineTests: XCTestCase {
 
 final class ThoughtTextTests: XCTestCase {
     func testTitleIsFirstLine() {
-        XCTAssertEqual(ThoughtText.title(text: "Купить молоко\nи хлеб", isVoice: false, duration: nil, status: .none), "Купить молоко")
-        XCTAssertEqual(ThoughtText.preview(text: "Купить молоко\nи хлеб"), "и хлеб")
+        XCTAssertEqual(ThoughtText.title(text: "Buy milk\nand bread", isVoice: false, duration: nil, status: .none), "Buy milk")
+        XCTAssertEqual(ThoughtText.preview(text: "Buy milk\nand bread"), "and bread")
     }
 
     func testLongTitleTruncatedAt60() {
-        let long = String(repeating: "а", count: 100)
+        let long = String(repeating: "a", count: 100)
         let title = ThoughtText.title(text: long, isVoice: false, duration: nil, status: .none)
         XCTAssertEqual(title.count, 61)
         XCTAssertTrue(title.hasSuffix("…"))
@@ -89,9 +89,12 @@ final class ThoughtTextTests: XCTestCase {
     }
 
     func testPlural() {
-        XCTAssertEqual(Plural.thoughts(1), "1 мысль")
-        XCTAssertEqual(Plural.thoughts(3), "3 мысли")
-        XCTAssertEqual(Plural.thoughts(11), "11 мыслей")
-        XCTAssertEqual(Plural.focuses(22), "22 фокуса")
+        XCTAssertEqual(Plural.thoughts(1), "1 thought")
+        XCTAssertEqual(Plural.thoughts(3), "3 thoughts")
+        XCTAssertEqual(Plural.focuses(1), "1 focus")
+        XCTAssertEqual(Plural.ordinal(1), "1st")
+        XCTAssertEqual(Plural.ordinal(2), "2nd")
+        XCTAssertEqual(Plural.ordinal(11), "11th")
+        XCTAssertEqual(Plural.ordinal(23), "23rd")
     }
 }

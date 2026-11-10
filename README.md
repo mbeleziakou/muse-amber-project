@@ -1,8 +1,8 @@
-# Островок
+# Ostrovok
 
-Нативное macOS-приложение в вырезе MacBook: поймать мысль за 2 секунды, фокус-таймер вокруг выреза, библиотека мыслей. Всё локально, без облака.
+A native macOS app that lives in the MacBook notch: catch a thought in two seconds, run a focus timer around the notch, and browse your thoughts in a library. Everything stays local — no cloud, no accounts.
 
-## Сборка
+## Build
 
 ```sh
 brew install xcodegen
@@ -10,32 +10,42 @@ xcodegen generate
 open Ostrovok.xcodeproj   # ⌘R
 ```
 
-Требуется macOS 14+. Подпись — локальная (ad-hoc).
+Requires macOS 14+. Signed locally (ad-hoc).
 
-## Хоткеи
+## Shortcuts
 
 | | |
 |---|---|
-| `⌃⌥Space` | Поймать мысль |
-| `⌃⌥F` | Старт / пауза фокуса |
-| `⌃⌥L` | Библиотека |
+| `⌃⌥Space` | Catch a thought |
+| `⌃⌥F` | Start / pause focus |
+| `⌃⌥L` | Library |
 
-Все переназначаются в настройках.
+All shortcuts can be changed in Settings.
 
-## Состояния выреза
+## Notch states
 
-S0 покой · S1 фокус в крыльях · S2 peek (hover ≥150 мс) · S3 панель (клик) · S5 «Сохранено» с ⌘Z · S6 фокус завершён · S7 перерыв.
+S0 idle · S1 focus in the wings · S2 peek (hover ≥150 ms) · S3 panel (click) · S5 "Saved" with ⌘Z · S6 focus done · S7 break.
 
-## Данные
+## Design
 
-`~/Library/Application Support/Ostrovok/` — SwiftData-хранилище и картинки. Экспорт в Markdown — в настройках.
+White accent, dark surfaces, restrained glass input. Native SwiftUI takes on three interaction patterns:
 
-## Отладка
+- **Border glow** on thought cards — a mesh-gradient rim that follows the cursor and intensifies near the edges; the newest card sweeps once.
+- **Animated list** in the library and calendar — rows spring into view, a gliding selection follows hover and arrow keys, edges fade out.
+- **Gooey nav** for filters and the Recent / Calendar switch — the active pill flows to the new item with a droplet burst.
 
-- «Эмулировать вырез» в настройках — для мониторов без выреза.
-- Debug-сборка с `OSTROVOK_SNAPSHOT_DIR=<папка>` рендерит все состояния выреза в PNG; `OSTROVOK_DATA_DIR=<папка>` — отдельное хранилище.
+Icons animate on hover and press; the sparkle in the input breathes when empty and bursts when you start typing.
 
-## Тесты
+## Data
+
+`~/Library/Application Support/Ostrovok/` — SwiftData store and images. Export everything to Markdown from Settings.
+
+## Debugging
+
+- "Emulate notch" in Settings for displays without a notch.
+- Debug builds with `OSTROVOK_SNAPSHOT_DIR=<dir>` render every notch state to PNG; `OSTROVOK_DATA_DIR=<dir>` uses a separate store.
+
+## Tests
 
 ```sh
 xcodebuild -scheme Ostrovok -destination 'platform=macOS' test

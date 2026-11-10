@@ -100,8 +100,8 @@ enum ThoughtText {
     static func title(text: String, isVoice: Bool, duration: Double?, status: TranscriptStatus) -> String {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmed.isEmpty {
-            if isVoice { return "Голосовая · " + Fmt.duration(duration ?? 0) }
-            return "Без текста"
+            if isVoice { return "Voice · " + Fmt.duration(duration ?? 0) }
+            return "Untitled"
         }
         let first = trimmed.components(separatedBy: .newlines).first ?? trimmed
         if first.count <= 60 { return first }
@@ -134,24 +134,24 @@ enum Fmt {
         if s >= 3600 { return String(format: "%d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60) }
         return String(format: "%02d:%02d", s / 60, s % 60)
     }
-    static let ru = Locale(identifier: "ru_RU")
+    static let en = Locale(identifier: "en_US")
     static func shortDate(_ d: Date) -> String {
-        let f = DateFormatter(); f.locale = ru; f.setLocalizedDateFormatFromTemplate("d MMM")
-        return f.string(from: d).replacingOccurrences(of: ".", with: "")
+        let f = DateFormatter(); f.locale = en; f.setLocalizedDateFormatFromTemplate("MMM d")
+        return f.string(from: d)
     }
     static func time(_ d: Date) -> String {
-        let f = DateFormatter(); f.locale = ru; f.dateFormat = "HH:mm"
+        let f = DateFormatter(); f.locale = en; f.dateFormat = "h:mm a"
         return f.string(from: d)
     }
     static func dayHeader(_ d: Date, now: Date = .now) -> String {
         let cal = Calendar.current
-        if cal.isDate(d, inSameDayAs: now) { return "Сегодня" }
-        if let y = cal.date(byAdding: .day, value: -1, to: now), cal.isDate(d, inSameDayAs: y) { return "Вчера" }
-        let f = DateFormatter(); f.locale = ru
-        f.setLocalizedDateFormatFromTemplate(cal.isDate(d, equalTo: now, toGranularity: .year) ? "d MMMM, EEEE" : "d MMMM yyyy")
+        if cal.isDate(d, inSameDayAs: now) { return "Today" }
+        if let y = cal.date(byAdding: .day, value: -1, to: now), cal.isDate(d, inSameDayAs: y) { return "Yesterday" }
+        let f = DateFormatter(); f.locale = en
+        f.setLocalizedDateFormatFromTemplate(cal.isDate(d, equalTo: now, toGranularity: .year) ? "EEEE, MMMM d" : "MMMM d, yyyy")
         return f.string(from: d)
     }
-    static func minutes(_ seconds: Int) -> String { "\(Int((Double(seconds) / 60).rounded())) мин" }
+    static func minutes(_ seconds: Int) -> String { "\(Int((Double(seconds) / 60).rounded())) min" }
 }
 
 enum Storage {
