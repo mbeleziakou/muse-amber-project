@@ -1,0 +1,586 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0696E3CF1CAD5308339A19BB /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 56340E9B78FACB3C57F7B147 /* KeyboardShortcuts */; };
+		0E218E16D00F7856E8C24BD7 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D992238E7C7BFEFE77B2EC /* LibraryView.swift */; };
+		11713F4C30BB86C671F4F780 /* NotchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C1D33593E149857DF0B3BC1 /* NotchController.swift */; };
+		17B11FE69E44F51BE33E478C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FA9975F85750A59E446E0A /* Settings.swift */; };
+		195C74298E5F58E94DCD7939 /* TimerEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944D4EFB8CDDE3ED9F50CDD1 /* TimerEngine.swift */; };
+		1C867AF49B9582AB9C61C273 /* NotchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30366E7E04A4D319A582A05 /* NotchRootView.swift */; };
+		332A805F3B1EA3954C857FFE /* DebugSnapshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA7509D6BEB9CD5401168DF /* DebugSnapshots.swift */; };
+		346F0B5E8F7315E462A755A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6196EE024CCD75D3293DAEAE /* Assets.xcassets */; };
+		36F30A04D97D911E3A0976DD /* FocusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF12ED4CD8563DF777FA2C2 /* FocusController.swift */; };
+		3A40A5A0254C546D53CEE51A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7B6D99CA6191A214B6C391 /* SettingsView.swift */; };
+		4CB6AF33962C0E92D9060053 /* NotchPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0322C5E297B353EDF235321B /* NotchPanel.swift */; };
+		4D70654F37D8363D4F30182B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87ED83BB2E9E52A0C535A53A /* Theme.swift */; };
+		560A36737FEA9D575D715424 /* NotchShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72903BECB536393257F77647 /* NotchShape.swift */; };
+		5895BE830B106BD224558681 /* TimerEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56477F5DA21496BE93A69DE8 /* TimerEngineTests.swift */; };
+		6262AC929827C91B2DE00959 /* NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FFD1DEAFB2D8AD9299D38 /* NotchGeometry.swift */; };
+		78208487E56BFD42953D7D49 /* OstrovokApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383BB09D2D62ADC2967B5C02 /* OstrovokApp.swift */; };
+		93A85FD59A369DFC30A85E7D /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82664745EFDE890EF15899E4 /* CalendarService.swift */; };
+		A31F9632F915E6448C990B5A /* LibraryWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D1E091733AD6A4DDF3F0EB /* LibraryWindowController.swift */; };
+		B4B96BD6916B392155A222DB /* ExpandedPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862C097ECFC1CAA361AB1676 /* ExpandedPanel.swift */; };
+		BC6F654E3D83D62B8B9499D0 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45D95DE32EA78819A3D6F4D /* DataStore.swift */; };
+		D2ADAA4B35BEC681E05D6C7B /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0A128FED752181BB44B20A /* Models.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B46AEAF9BD7B5B75D5CD846B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EE5F2EA9C0BBC4D51EBD346 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 884A80FAF664C71B9AB3B9DB;
+			remoteInfo = Ostrovok;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01D992238E7C7BFEFE77B2EC /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		0322C5E297B353EDF235321B /* NotchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchPanel.swift; sourceTree = "<group>"; };
+		0FA7509D6BEB9CD5401168DF /* DebugSnapshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugSnapshots.swift; sourceTree = "<group>"; };
+		21D1E091733AD6A4DDF3F0EB /* LibraryWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryWindowController.swift; sourceTree = "<group>"; };
+		383BB09D2D62ADC2967B5C02 /* OstrovokApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OstrovokApp.swift; sourceTree = "<group>"; };
+		3C083825838CD4641D711FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3D7B6D99CA6191A214B6C391 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4A9FFD1DEAFB2D8AD9299D38 /* NotchGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchGeometry.swift; sourceTree = "<group>"; };
+		56477F5DA21496BE93A69DE8 /* TimerEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngineTests.swift; sourceTree = "<group>"; };
+		578D12290A9268D84BF4246B /* OstrovokTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OstrovokTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6196EE024CCD75D3293DAEAE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		71D651C1E5D9F078322C430A /* Ostrovok.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ostrovok.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		72903BECB536393257F77647 /* NotchShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchShape.swift; sourceTree = "<group>"; };
+		82664745EFDE890EF15899E4 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
+		862C097ECFC1CAA361AB1676 /* ExpandedPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedPanel.swift; sourceTree = "<group>"; };
+		87ED83BB2E9E52A0C535A53A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		8C1D33593E149857DF0B3BC1 /* NotchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchController.swift; sourceTree = "<group>"; };
+		92FA9975F85750A59E446E0A /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		944D4EFB8CDDE3ED9F50CDD1 /* TimerEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerEngine.swift; sourceTree = "<group>"; };
+		A45D95DE32EA78819A3D6F4D /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		D30366E7E04A4D319A582A05 /* NotchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchRootView.swift; sourceTree = "<group>"; };
+		DB0A128FED752181BB44B20A /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		F343F2C27B11C2860578B440 /* Ostrovok.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Ostrovok.entitlements; sourceTree = "<group>"; };
+		FDF12ED4CD8563DF777FA2C2 /* FocusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3897824963EA24E0504FD50F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0696E3CF1CAD5308339A19BB /* KeyboardShortcuts in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2D029EF2F6298906C87F7091 /* Ostrovok */ = {
+			isa = PBXGroup;
+			children = (
+				C8AF17EB29380F17198A1BC8 /* App */,
+				4612CA8D29B09AE46A9102E7 /* Focus */,
+				80FC7F400E696E344AD67FA5 /* Library */,
+				94E50E3CEED1B646487C54D9 /* Model */,
+				2FA7FF0B1CAA4703FC6C7BEE /* Notch */,
+				A43A9605A9D08DBE97E60187 /* Resources */,
+				DC56617006129837C3D0CAFF /* Settings */,
+				4D4B5B9D2463EEE60CC70AC0 /* Support */,
+			);
+			path = Ostrovok;
+			sourceTree = "<group>";
+		};
+		2FA7FF0B1CAA4703FC6C7BEE /* Notch */ = {
+			isa = PBXGroup;
+			children = (
+				862C097ECFC1CAA361AB1676 /* ExpandedPanel.swift */,
+				8C1D33593E149857DF0B3BC1 /* NotchController.swift */,
+				4A9FFD1DEAFB2D8AD9299D38 /* NotchGeometry.swift */,
+				0322C5E297B353EDF235321B /* NotchPanel.swift */,
+				D30366E7E04A4D319A582A05 /* NotchRootView.swift */,
+				72903BECB536393257F77647 /* NotchShape.swift */,
+			);
+			path = Notch;
+			sourceTree = "<group>";
+		};
+		4612CA8D29B09AE46A9102E7 /* Focus */ = {
+			isa = PBXGroup;
+			children = (
+				82664745EFDE890EF15899E4 /* CalendarService.swift */,
+				FDF12ED4CD8563DF777FA2C2 /* FocusController.swift */,
+				944D4EFB8CDDE3ED9F50CDD1 /* TimerEngine.swift */,
+			);
+			path = Focus;
+			sourceTree = "<group>";
+		};
+		4D4B5B9D2463EEE60CC70AC0 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				92FA9975F85750A59E446E0A /* Settings.swift */,
+				87ED83BB2E9E52A0C535A53A /* Theme.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		50445A04D3B9660C01E1843F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				71D651C1E5D9F078322C430A /* Ostrovok.app */,
+				578D12290A9268D84BF4246B /* OstrovokTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		73807239B17562EA0C00B19A = {
+			isa = PBXGroup;
+			children = (
+				2D029EF2F6298906C87F7091 /* Ostrovok */,
+				AEC2BB492763ACFD535DE42F /* OstrovokTests */,
+				50445A04D3B9660C01E1843F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		80FC7F400E696E344AD67FA5 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				01D992238E7C7BFEFE77B2EC /* LibraryView.swift */,
+				21D1E091733AD6A4DDF3F0EB /* LibraryWindowController.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		94E50E3CEED1B646487C54D9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A45D95DE32EA78819A3D6F4D /* DataStore.swift */,
+				DB0A128FED752181BB44B20A /* Models.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A43A9605A9D08DBE97E60187 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6196EE024CCD75D3293DAEAE /* Assets.xcassets */,
+				3C083825838CD4641D711FD4 /* Info.plist */,
+				F343F2C27B11C2860578B440 /* Ostrovok.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		AEC2BB492763ACFD535DE42F /* OstrovokTests */ = {
+			isa = PBXGroup;
+			children = (
+				56477F5DA21496BE93A69DE8 /* TimerEngineTests.swift */,
+			);
+			path = OstrovokTests;
+			sourceTree = "<group>";
+		};
+		C8AF17EB29380F17198A1BC8 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				0FA7509D6BEB9CD5401168DF /* DebugSnapshots.swift */,
+				383BB09D2D62ADC2967B5C02 /* OstrovokApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		DC56617006129837C3D0CAFF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3D7B6D99CA6191A214B6C391 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		142E5627B5C1D5A060D62DA7 /* OstrovokTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A3D1CF1F93A0ADF24480D18 /* Build configuration list for PBXNativeTarget "OstrovokTests" */;
+			buildPhases = (
+				BDE378613A7E4AB4A537527E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B7C3FA12482E110FEE70EED6 /* PBXTargetDependency */,
+			);
+			name = OstrovokTests;
+			packageProductDependencies = (
+			);
+			productName = OstrovokTests;
+			productReference = 578D12290A9268D84BF4246B /* OstrovokTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		884A80FAF664C71B9AB3B9DB /* Ostrovok */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B74657A3FE9CBBDE8EEB8566 /* Build configuration list for PBXNativeTarget "Ostrovok" */;
+			buildPhases = (
+				C81DF6D506D7983E74201B43 /* Sources */,
+				D9E7BBB9547F680512827E52 /* Resources */,
+				3897824963EA24E0504FD50F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Ostrovok;
+			packageProductDependencies = (
+				56340E9B78FACB3C57F7B147 /* KeyboardShortcuts */,
+			);
+			productName = Ostrovok;
+			productReference = 71D651C1E5D9F078322C430A /* Ostrovok.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2EE5F2EA9C0BBC4D51EBD346 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					142E5627B5C1D5A060D62DA7 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+					884A80FAF664C71B9AB3B9DB = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = BC8697F1C02580A5FB46DFF0 /* Build configuration list for PBXProject "Ostrovok" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 73807239B17562EA0C00B19A;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DC9F843F1549146415F92E57 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 50445A04D3B9660C01E1843F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				884A80FAF664C71B9AB3B9DB /* Ostrovok */,
+				142E5627B5C1D5A060D62DA7 /* OstrovokTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D9E7BBB9547F680512827E52 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				346F0B5E8F7315E462A755A4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BDE378613A7E4AB4A537527E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5895BE830B106BD224558681 /* TimerEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C81DF6D506D7983E74201B43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93A85FD59A369DFC30A85E7D /* CalendarService.swift in Sources */,
+				BC6F654E3D83D62B8B9499D0 /* DataStore.swift in Sources */,
+				332A805F3B1EA3954C857FFE /* DebugSnapshots.swift in Sources */,
+				B4B96BD6916B392155A222DB /* ExpandedPanel.swift in Sources */,
+				36F30A04D97D911E3A0976DD /* FocusController.swift in Sources */,
+				0E218E16D00F7856E8C24BD7 /* LibraryView.swift in Sources */,
+				A31F9632F915E6448C990B5A /* LibraryWindowController.swift in Sources */,
+				D2ADAA4B35BEC681E05D6C7B /* Models.swift in Sources */,
+				11713F4C30BB86C671F4F780 /* NotchController.swift in Sources */,
+				6262AC929827C91B2DE00959 /* NotchGeometry.swift in Sources */,
+				4CB6AF33962C0E92D9060053 /* NotchPanel.swift in Sources */,
+				1C867AF49B9582AB9C61C273 /* NotchRootView.swift in Sources */,
+				560A36737FEA9D575D715424 /* NotchShape.swift in Sources */,
+				78208487E56BFD42953D7D49 /* OstrovokApp.swift in Sources */,
+				17B11FE69E44F51BE33E478C /* Settings.swift in Sources */,
+				3A40A5A0254C546D53CEE51A /* SettingsView.swift in Sources */,
+				4D70654F37D8363D4F30182B /* Theme.swift in Sources */,
+				195C74298E5F58E94DCD7939 /* TimerEngine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B7C3FA12482E110FEE70EED6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 884A80FAF664C71B9AB3B9DB /* Ostrovok */;
+			targetProxy = B46AEAF9BD7B5B75D5CD846B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		01C5612039AE0397F6729FD0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		57856C244A80AF8A1F37F13B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Ostrovok/Resources/Ostrovok.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Ostrovok/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vagab.ostrovok;
+				PRODUCT_NAME = Ostrovok;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		58450DF27DB30D2627282055 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vagab.OstrovokTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ostrovok.app/Contents/MacOS/Ostrovok";
+			};
+			name = Debug;
+		};
+		7F21ED4CD575C50DDE19091C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Ostrovok/Resources/Ostrovok.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Ostrovok/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vagab.ostrovok;
+				PRODUCT_NAME = Ostrovok;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AF809E348B969DEF8C1E04F0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B3D657D86DE4B43F3B4EBDCC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vagab.OstrovokTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ostrovok.app/Contents/MacOS/Ostrovok";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2A3D1CF1F93A0ADF24480D18 /* Build configuration list for PBXNativeTarget "OstrovokTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				58450DF27DB30D2627282055 /* Debug */,
+				B3D657D86DE4B43F3B4EBDCC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B74657A3FE9CBBDE8EEB8566 /* Build configuration list for PBXNativeTarget "Ostrovok" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				57856C244A80AF8A1F37F13B /* Debug */,
+				7F21ED4CD575C50DDE19091C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BC8697F1C02580A5FB46DFF0 /* Build configuration list for PBXProject "Ostrovok" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C5612039AE0397F6729FD0 /* Debug */,
+				AF809E348B969DEF8C1E04F0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DC9F843F1549146415F92E57 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		56340E9B78FACB3C57F7B147 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC9F843F1549146415F92E57 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 2EE5F2EA9C0BBC4D51EBD346 /* Project object */;
+}
